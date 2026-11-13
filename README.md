@@ -43,7 +43,7 @@ These five comparisons are separate from the 10% validation-set MAE and MSE. The
 ```text
 README.md
 requirements.txt
-Picture1.png
+Latex/Picture1.png
 Code/
   Code/
     DevelopDNNsModel.py
@@ -74,18 +74,6 @@ py -3.12 -m venv .venv
 
 If `py -3.12` is not available, install Python 3.12 first. Do not copy the `PS C:\...>` prompt into PowerShell; type only the commands shown.
 
-## Check the supplied model on an example case
-
-From the repository root:
-
-```powershell
-.\.venv\Scripts\python.exe Code\Code\Detection_Presentation.py 1
-```
-
-Replace `1` with `2`, `3`, `4`, or `5` to run another case. If no case number is supplied, the script asks for one. The range is restricted to 1–5. **Close the chart window** after inspecting it: the script exports the Excel result after `plt.show()` returns. Each run overwrites the corresponding `Cn.xlsx` and `Cn.jpeg` in `Code/Result/Case n/`; copy supplied results elsewhere first if you want to preserve them.
-
-The script requires both `X_Cn.xlsx` and `Y_Cn.xlsx` because it is a prediction-and-comparison demonstration. It is not an unlabeled-input design tool.
-
 ## Retrain
 
 From the repository root:
@@ -95,6 +83,18 @@ From the repository root:
 ```
 
 This reads the two CSV files, applies the ordered 139/16 split, trains the model, prints training and validation evaluations, and writes `Code/Model/B_SS.keras`, `Code/Code/History/B_SS.csv`, and two PDF convergence plots. Close the plot windows to finish the process. **Retraining overwrites these saved files.** The script does not set a random seed, so a new run can produce different weights, metrics, and case predictions. For checking the submitted case results, use the supplied model rather than retraining first.
+
+## Testing: run a prediction
+
+Testing can use the supplied `Code/Model/B_SS.keras` directly; retraining is not required. If you do retrain first, the testing script automatically loads the newly saved model from that same path. From the repository root, run **Case 1**:
+
+```powershell
+.\.venv\Scripts\python.exe Code\Code\Detection_Presentation.py 1
+```
+
+The final `1` selects `Code/Detection/Case 1/X_C1.xlsx` and `Y_C1.xlsx`. The script predicts the three normalized outputs, compares them with the supplied design values, and writes `Code/Result/Case 1/C1.jpeg` and `C1.xlsx`. **Close the chart window** to let the Excel export finish.
+
+To test **Case 2**, replace only the final `1` in the command with `2`. Use `3`, `4`, or `5` in the same way for the remaining cases. The script runs one case at a time and overwrites that case's existing `Cn.jpeg` and `Cn.xlsx`. It requires both `X_Cn.xlsx` and `Y_Cn.xlsx` because it is a prediction-and-comparison demonstration, not an unlabeled-input design tool.
 
 ## Provenance and disclosure
 
